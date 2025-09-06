@@ -1,4 +1,4 @@
 <?
-include_once '.lab0index.php'
+include_once './lab0/index.php'
 ?>
 
