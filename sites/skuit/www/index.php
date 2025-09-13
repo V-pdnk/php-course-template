@@ -1,4 +1,4 @@
 <?
-include_once './lab0/index.php'
+include_once './ex-lab3/convertor_final.php'
 ?>
 
