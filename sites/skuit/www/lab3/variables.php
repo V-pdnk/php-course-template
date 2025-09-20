@@ -61,7 +61,7 @@
             <div class="section">
                 <h2>3. Операции со строками</h2>
                 <?php
-                $greeting = 'Привет, '.$name.'!';
+                $greeting = 'Привет, ' . $name . '!';
                 $ageInfo = "Тебе $age лет";
                 $upperName = mb_strtoupper($name);
                 $nameLenght = mb_strlen($name);
@@ -113,6 +113,38 @@
                 <div class="hint"><?= $randomFloat ?></div>
             </div>
         </div>
+         <div class="section">
+            <h2>Калькулятор преобразований</h2>
+            <form method="POST">
+                <label>Введите рост в см:</label>
+                <input type="number" name="heightCm" value="<?= $_POST['heightCm'] ?? '' ?>" required>
+                
+                <label>Введите возраст:</label>
+                <input type="number" name="age" value="<?= $_POST['age'] ?? '' ?>" required>
+                
+                <button type="submit" name="calculate">Рассчитать</button>
+            </form>
+
+            <?php
+            if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['calculate'])) {
+                $inputHeight = $_POST['heightCm'];
+                $inputAge = $_POST['age'];
+                
+                $heightInches = $inputHeight / 2.54;
+                $heightMeters = $inputHeight / 100;
+                $birthYear = 2024 - $inputAge;
+                $randomNumber = rand(1, 100);
+                
+                echo "<div class='result'>";
+                echo "<p>Рост в дюймах: " . round($heightInches, 2) . "</p>";
+                echo "<p>Рост в метрах: " . round($heightMeters, 2) . "</p>";
+                echo "<p>Год рождения: " . $birthYear . "</p>";
+                echo "<p>Случайное число: " . $randomNumber . "</p>";
+                echo "</div>";
+            }
+            ?>
+        </div>
+    </div>
 
     </body>
 </html>
