@@ -44,9 +44,9 @@ for($i = 0; $i < count($conscripts); $i++){
     $weapon = $weapons[array_rand($weapons)];
     $soldier["weaponName"] = $weapon["name"];
     $soldier["weaponClass"] = $weapon["class"];
-    $soldier["hp"] += $conscripts[$i]["hp"];
-    $soldier["strength"] += $conscripts[$i]["strength"];
-    $soldier["intelligence"] += $conscripts[$i]["intelligence"];
+    $soldier["hp"] += $weapon["bonus"]["hp"];
+    $soldier["strength"] += $weapon["bonus"]["strength"];
+    $soldier["intelligence"] += $weapon["bonus"]["intelligence"];
     $militia[] = $soldier;
 }
 $units = [
@@ -65,14 +65,30 @@ foreach($militia as $sold){
         $units["scout"][] = $sold;
     }
 }
-$commanders = ["ranged" => $units["ranged"][0], "melee" => $units["melee"][0], "scout" => $units["scout"][0]];
-for($i=0; $i<count($units); $i++){
-    foreach($units[$i] as $type){
-        if($type["intelligence"] > $commanders[$i]["intelligence"]){
-            $commanders[$i] = $type;
+$commanders = ["ranged" => null, "melee" => null, "scout" => null];
+$statSumm = [
+    "ranged" => ["hp" => 0, "strength" => 0, "intelligence" => 0], 
+    "melee" => ["hp" => 0, "strength" => 0, "intelligence" => 0], 
+    "scout" => ["hp" => 0, "strength" => 0, "intelligence" => 0]
+];
+foreach($units as $type => $typeKey){
+    $int = 0;
+    for($i = 0; $i < count($typeKey); $i++){
+        $statSumm[$type]["hp"] += $typeKey[$i]["hp"];
+        $statSumm[$type]["intelligence"] += $typeKey[$i]["intelligence"];
+        $statSumm[$type]["strength"] += $typeKey[$i]["strength"];
+        if($units[$type][$i]["intelligence"] >= $int){
+            $int = $units[$type][$i]["intelligence"];
+        }
+    }
+    for($i = 0; $i < count($typeKey); $i++){
+        if($units[$type][$i]["intelligence"] == $int){
+            $commanders[$type][] = $units[$type][$i]["name"];
         }
     }
 }
+
+
 ?>
 
 <html lang=ru>
@@ -105,27 +121,73 @@ for($i=0; $i<count($units); $i++){
         <? } ?>
     </table>
     <h2>3) Отряды и командиры</h2>
-<div class="grid">
+    <div class="grid">
 
-<div class="unit">
-<h3>🏹 Стрелки (<?= $ourStats["ranged"]["count"] ?? 0 ?>)</h3>
-<p><b>Командир:</b> <?= $ourCommanders["ranged"] ?? "нет" ?></p>
-<p>❤️ Здоровье: <?= $ourStats["ranged"]["hp"] ?? 0 ?> | ⚔️ Сила: <?= $ourStats["ranged"]["strength"] ?? 0 ?> | 🧠 Интеллект: <?= $ourStats["ranged"]["intelligence"] ?? 0 ?></p>
-<?php if (!empty($ourUnits["ranged"])) { ?>
-<div class="vlist">
-<?php foreach ($ourUnits["ranged"] as $u) { ?>
-<div class="smallcard">
-<div class="avatar">🏹</div>
-<div class="info">
-<b><?= $u["name"] ?></b><br>
-🪓 Оружие: <?= $u["weaponName"] ?><br>
-❤️ <?= $u["hp"] ?> | ⚔️ <?= $u["strength"] ?> | 🧠 <?= $u["intelligence"] ?>
-</div>
-</div>
-<?php } ?>
-</div>
-<?php } else { ?>
-<p><i>Нет бойцов</i></p>
-<?php } ?>
-</div>
+        <div class="unit">
+            <h3>🏹 Стрелки (<?= count($units["ranged"]) ?? 0 ?>)</h3>
+            <p><b>Командир:</b> <?= $commanders["ranged"][0] ?? "нет" ?></p>
+            <p>❤️ Здоровье: <?= $statSumm["ranged"]["hp"] ?? 0 ?> | ⚔️ Сила: <?= $statSumm["ranged"]["strength"] ?? 0 ?> | 🧠 Интеллект: <?= $statSumm["ranged"]["intelligence"] ?? 0 ?></p>
+            <?php if (!empty($units["ranged"])) { ?>
+            <div class="vlist">
+                <?php foreach ($units["ranged"] as $u) { ?>
+                <div class="smallcard">
+                    <div class="avatar">🏹</div>
+                    <div class="info">
+                        <b><?= $u["name"] ?></b><br>
+                        🪓 Оружие: <?= $u["weaponName"] ?><br>
+                        ❤️ <?= $u["hp"] ?> | ⚔️ <?= $u["strength"] ?> | 🧠 <?= $u["intelligence"] ?>
+                    </div>
+                </div>
+                <?php } ?>
+            </div>
+            <?php } else { ?>
+            <p><i>Нет бойцов</i></p>
+            <?php } ?>
+        </div>
+
+        <div class="unit">
+            <h3>⚔️ Ближний бой (<?= count($units["melee"]) ?? 0 ?>)</h3>
+            <p><b>Командир:</b> <?= $commanders["melee"][0] ?? "нет" ?></p>
+            <p>❤️ Здоровье: <?= $statSumm["melee"]["hp"] ?? 0 ?> | ⚔️ Сила: <?= $statSumm["melee"]["strength"] ?? 0 ?> | 🧠 Интеллект: <?= $statSumm["melee"]["intelligence"] ?? 0 ?></p>
+            <?php if (!empty($units["melee"])) { ?>
+            <div class="vlist">
+                <?php foreach ($units["melee"] as $u) { ?>
+                <div class="smallcard">
+                    <div class="avatar">🛡️</div>
+                    <div class="info">
+                        <b><?= $u["name"] ?></b><br>
+                        🪓 Оружие: <?= $u["weaponName"] ?><br>
+                        ❤️ <?= $u["hp"] ?> | ⚔️ <?= $u["strength"] ?> | 🧠 <?= $u["intelligence"] ?>
+                    </div>
+                </div>
+                <?php } ?>
+            </div>
+            <?php } else { ?>
+            <p><i>Нет бойцов</i></p>
+            <?php } ?>
+        </div>
+
+        <div class="unit">
+            <h3>🕵️ Партизаны (<?= count($units["scout"]) ?? 0 ?>)</h3>
+            <p><b>Командир:</b> <?= $commanders["scout"][0] ?? "нет" ?></p>
+            <p>❤️ Здоровье: <?= $statSumm["scout"]["hp"] ?? 0 ?> | ⚔️ Сила: <?= $statSumm["scout"]["strength"] ?? 0 ?> | 🧠 Интеллект: <?= $statSumm["scout"]["intelligence"] ?? 0 ?></p>
+            <?php if (!empty($units["scout"])) { ?>
+            <div class="vlist">
+                <?php foreach ($units["scout"] as $u) { ?>
+                <div class="smallcard">
+                    <div class="avatar">🕸️</div>
+                    <div class="info">
+                        <b><?= $u["name"] ?></b><br>
+                        🪓 Оружие: <?= $u["weaponName"] ?><br>
+                        ❤️ <?= $u["hp"] ?> | ⚔️ <?= $u["strength"] ?> | 🧠 <?= $u["intelligence"] ?>
+                    </div>
+                </div>
+                <?php } ?>
+            </div>
+            <?php } else { ?>
+            <p><i>Нет бойцов</i></p>
+            <?php } ?>
+        </div>
+
+    </div>
 </html>
