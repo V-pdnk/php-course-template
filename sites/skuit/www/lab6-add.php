@@ -132,34 +132,37 @@ endfor;
     <h2>Товары и цены больше 100р</h2>
 
     <? foreach($goodsRandom as $num): 
-        if($num['price'] > 100) {?>
+        if($num['price'] > 100):?>
         <div class="product-card">
             <div class="product-name"><?= $num['name']?></div>
             <div class="product-price"><?= $num['price']?> Руб</div>
-        </div>
-    <?}endforeach?>
+        </div><?
+        endif;
+    endforeach;?>
 </div>
 
 <div class="product-list">
     <h2>Товары и цены больше 1000р</h2>
 
     <? foreach($goodsRandom as $num): 
-        if($num['price'] > 1000) {?>
+        if($num['price'] > 1000):?>
         <div class="product-card">
             <div class="product-name"><?= $num['name']?></div>
             <div class="product-price"><?= $num['price']?> Руб</div>
-        </div>
-    <?}endforeach;?>
+        </div><?
+        endif;
+    endforeach;?>
 </div>
 
 <div class="product-list">
     <h2>Товары и цены больше 100р и меньше 1000р</h2>
 
     <? foreach($goodsRandom as $num): 
-        if($num['price'] > 100 & $num['price'] < 1000) {?>
+        if($num['price'] > 100 & $num['price'] < 1000):?>
         <div class="product-card">
             <div class="product-name"><?= $num['name']?></div>
             <div class="product-price"><?= $num['price']?> Руб</div>
-        </div>
-    <?}endforeach;?>
+        </div><?
+        endif;
+    endforeach;?>
 </div>
