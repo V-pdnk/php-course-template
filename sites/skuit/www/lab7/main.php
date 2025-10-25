@@ -10,6 +10,27 @@ if($randNum1 == $randNum2):
 endif;
 $bigNum = ($randNum1 > $randNum2) ? $randNum1:$randNum2;
 /*3. Сумма чисел от 1 до N*/
+$randNumN = rand(10,100);
+$sum = 0;
+for($i = 0; $i < $randNumN+1; $i++):
+    $sum += $i;
+endfor;
+/*4. Подсчёт положительных, отрицательных и нулевых чисел*//*5. Поиск минимального числа в массиве*/
+for($i = 0; $i <10; $i++):
+    $arr[] = rand(-10, 10);
+    //echo $arr[$i].' / ';
+endfor;
+$zeros = 0;
+$neg = 0;
+$pos = 0;
+foreach($arr as $n):
+    if($n == 0):
+        $zeros ++;
+        continue;
+    endif;
+    $n > 0 ? $pos++:$neg++;
+endforeach;
+
 ?>
 <html lang=ru>
     <div class="1">
@@ -24,4 +45,21 @@ $bigNum = ($randNum1 > $randNum2) ? $randNum1:$randNum2;
         <h2>В схватке за звание самого большого числа побеждает: <?= $bigNum ?>!</h2>
     </div>
 
+    <div class="3">
+        <h1>3. Сумма чисел от 1 до N</h1>
+        <h2>Числом N становится <?= $randNumN ?></h2>
+        <h2>Сумма всех чисел от 1 до <?= $randNumN ?>: <?= $sum ?></h2>
+    </div>
+
+    <div class="4">
+        <h1>4. Подсчёт положительных, отрицательных и нулевых чисел</h1>
+        <h2>В массиве <?= $zeros ?> нулей</h2>
+        <h2>В массиве <?= $pos ?> положительных чисел</h2>
+        <h2>В массиве <?= $neg ?> отрицательных чисел</h2>
+    </div>
+
+    <div class="5">
+        <h1>5. Поиск минимального числа в массиве</h1>
+        <h2>Наименьшее число в массиве: <?= min($arr) ?></h2>
+    </div>
 </html>
