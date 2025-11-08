@@ -1,33 +1,37 @@
 <?php
 
-function printHelloWorld(){
+function printHelloWorld(): void
+{
     echo "Привет, мир!";
-    return 0;
 }
 
-function getHelloWorld(){
+function getHelloWorld(): string
+{
     return "Привет, мир!";
 }
 
 $res = getHelloWorld();
 
-function printHelloWorld2($name){
+function printHelloWorld2(string $name): void
+{
     echo "Привет, содержимое $name!";
-    return 0;
 }
 
-function printHelloWorld3($name){
-    return "Привет, содержимое $name!";
+function printHelloWorld3(string $name): string
+{
+
+    return 'Привет, содержимое ' . $name  . '!';
 }
 
 $hello = printHelloWorld3("тест 4");
 
-function calculateTotal($price, $count){
+function calculateTotal(int|float $price, int $count): int|float
+{
     return $price * $count;
 }
 
 function isEven($number){
-    $isCheck = ($number % 2 == 0) ? true:false;
+    $isCheck = ($number % 2 == 0) ? true : false;
     return $isCheck;
 }
 
