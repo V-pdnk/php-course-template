@@ -1,4 +1,4 @@
 <?
-include_once './lab8/lab8.php';
+include_once './lab9/lab9.php';
 ?>
 
