@@ -1,17 +1,11 @@
 <?php
+$db = new PDO('sqlite:database.sqlite');
 
-$jsonFile = __DIR__ . '/books_storage.json';
-
-if (!file_exists($jsonFile)) {
-    die("Файл books_storage.json не найден!");
-}
-
-$jsonData = file_get_contents($jsonFile);
-
-$books = json_decode($jsonData, true);
+$books = $db->query('SELECT * FROM books');
+var_dump($books);
 
 if ($books === null) {
-    die("Ошибка при чтении JSON: " . json_last_error_msg());
+    die("База");
 }
 
 $studentName = "Влад Ефанов";
