@@ -1,54 +1,43 @@
 <?php
 
-$fullname = "Влад Ефанов";
+$movie = "avatar";
+$age = 15;
+$accessDenied = "Доступ запрещен";
+$soldTickets = [10, 20, 15];
+$hasTicket = true;
 
-$group = "C025";
+function canWatch(int $age) : bool {
+    $access = false;
+    if ($age >= 16) {
+        $access = true;
+    } 
+    return $access;
+}
 
 ?>
 
 <!doctype html>
 
 <html lang="ru">
-
+<h1><?= strtoupper($movie)?></h1>
+<p>Доступ: <?php echo (canWatch($age) ? 'Доступ разрешен' : 'Доступ запрещен'); ?></p>
+<p>Проданно билетов: <?=  count($soldTickets); ?></p>
+<p><? if($hasTicket) {
+        echo  "Приятного просмотра!";
+    }
+    ?></p>
 <head>
 
 <meta charset="UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>lab0</title>
-
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
 </head>
 
-<body class="bg-light">
+<body>
 
  
-
-<div class="container vh-100 d-flex justify-content-center align-items-center">
-
-<div class="card shadow-lg p-4 text-center" style="max-width: 400px;">
-
-<h1 class="h4 text-primary mb-3">HELLO WORLD</h1>
-
-<div class="alert alert-info mb-3">
-
-<strong>ФИО:</strong> <?= $fullname?><br>
-
-<strong>Группа:</strong> <?= $group?>
-
-</div>
-
-<button class="btn btn-success w-100">👍</button>
-
-</div>
-
-</div>
-
- 
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 
