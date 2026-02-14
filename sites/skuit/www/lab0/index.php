@@ -1,8 +1,20 @@
 <?php
 
-$fullname = "Влад Ефанов";
+$position = "developer";
+$salary = 2500;
+$tooHigh = "Высокая зарплата";
+$money = [2500, 2600, 2550];
+$isRemote = true;
 
-$group = "C025";
+function isHighSalary(int $salary): bool 
+{
+    $isHigh = false;
+    if($salary > 3000) {
+        $bool = true;
+    }
+    return $isHigh;
+}
+
 
 ?>
 
@@ -16,39 +28,24 @@ $group = "C025";
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>lab0</title>
-
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
 </head>
 
-<body class="bg-light">
+<body>
 
- 
-
-<div class="container vh-100 d-flex justify-content-center align-items-center">
-
-<div class="card shadow-lg p-4 text-center" style="max-width: 400px;">
-
-<h1 class="h4 text-primary mb-3">HELLO WORLD</h1>
-
-<div class="alert alert-info mb-3">
-
-<strong>ФИО:</strong> <?= $fullname?><br>
-
-<strong>Группа:</strong> <?= $group?>
-
-</div>
-
-<button class="btn btn-success w-100">👍</button>
-
-</div>
-
-</div>
-
- 
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<p>Длинна строки: <?= mb_strlen($position) ?></p>
+<p>Средняя зарплата: 
+    <? 
+        $n = 0;
+        foreach($money as $oneMonth) {
+            $n += $oneMonth;
+        }
+        echo $n / count($money);
+    ?>
+</p>
+<p><? echo $isRemote ? "Удаленная работа" : "Офис"; ?></p>
+<p><? echo isHighSalary(5000) ? 'true':'false' ?></p>
+<p><? echo isHighSalary(2000) ? 'true':'false' ?></p>
 
 </body>
 
