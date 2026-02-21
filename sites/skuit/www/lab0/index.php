@@ -1,8 +1,30 @@
 <?php
 
-$fullname = "Влад Ефанов";
+$email = "student@gmail.com";
+$score = 85;
+$scre = [70, 80, 90];
+$hasHomework = false;
 
-$group = "C025";
+function isPassed(int $score): bool
+{
+    $result = false;
+    $score > 60 ? $result = true : $result = false;
+    return $result;
+}
+
+$exist = false;
+
+for($i = 0; $i < strlen($email); $i++){
+    $email[$i] === "@" ? $exist = true : $exist = false;
+    if($exist){
+        break;
+    }
+}
+
+$array_sum = array_sum($scre);
+$array_sum /= count($scre);
+
+
 
 ?>
 
@@ -16,39 +38,17 @@ $group = "C025";
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>lab0</title>
-
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<title>exam</title>
 
 </head>
 
-<body class="bg-light">
+<body>
 
- 
-
-<div class="container vh-100 d-flex justify-content-center align-items-center">
-
-<div class="card shadow-lg p-4 text-center" style="max-width: 400px;">
-
-<h1 class="h4 text-primary mb-3">HELLO WORLD</h1>
-
-<div class="alert alert-info mb-3">
-
-<strong>ФИО:</strong> <?= $fullname?><br>
-
-<strong>Группа:</strong> <?= $group?>
-
-</div>
-
-<button class="btn btn-success w-100">👍</button>
-
-</div>
-
-</div>
-
- 
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <p>Содержит "@"?: <?php echo($exist ? "Да" : "Нет"); ?></p>
+    <p>Больше 60?: <?= $score > 60 ? "Сдал" : "Не сдал"; ?></p>
+    <p>Средняя оценка: <?= $array_sum ?></p>
+    <p>Сдал ДЗ?: <?= $hasHomework ? "Да" : "Нет"; ?></p>
+    <p>Вызов функции: <?php echo(isPassed($score) ? "True" : "False") ?></p>
 
 </body>
 
